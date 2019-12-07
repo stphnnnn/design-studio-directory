@@ -11,6 +11,7 @@ import { Select } from "../components/Select";
 import { getStudios, getCountries } from "../dataHelpers";
 
 const IndexPage = ({ studios, countries }) => {
+  const [isLoading, setIsLoading] = React.useState(false);
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [activeField, setActiveField] = React.useState(0);
 
@@ -18,6 +19,7 @@ const IndexPage = ({ studios, countries }) => {
   const cityOptions = selectedCountry ? countries[selectedCountry] : [];
 
   const handleCityChange = selectedItem => {
+    setIsLoading(true);
     Router.push(`/results?country=${selectedCountry}&city=${selectedItem}`);
   };
 
@@ -44,6 +46,7 @@ const IndexPage = ({ studios, countries }) => {
           onChange={selectedItem => setSelectedCountry(selectedItem)}
           options={countryOptions}
           isCompact={activeField !== 0}
+          disabled={isLoading}
           onOpen={() => setActiveField(0)}
           onClose={() => selectedCountry && setActiveField(1)}
         />
@@ -52,7 +55,7 @@ const IndexPage = ({ studios, countries }) => {
           options={cityOptions}
           onChange={handleCityChange}
           isCompact={activeField !== 1}
-          disabled={!Boolean(selectedCountry)}
+          disabled={isLoading || !Boolean(selectedCountry)}
           onOpen={() => setActiveField(1)}
         />
       </div>
