@@ -22,7 +22,10 @@ const IndexPage = ({ studios, countries }) => {
 
   const handleCityChange = selectedItem => {
     setIsLoading(true);
-    Router.push(`/results?country=${selectedCountry}&city=${selectedItem}`);
+    Router.push(
+      `/results?country=${selectedCountry}&city=${selectedItem}`,
+      `/results/${selectedCountry}/${selectedItem}`
+    );
   };
 
   React.useEffect(() => {

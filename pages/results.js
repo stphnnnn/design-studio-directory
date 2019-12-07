@@ -5,7 +5,6 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
 import { Constraint } from "../components/Constraint";
-import { Heading } from "../components/Heading";
 import { Header } from "../components/Header";
 import SEO from "../components/SEO";
 import { Layout } from "../components/Layout";
