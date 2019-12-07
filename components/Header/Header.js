@@ -6,7 +6,7 @@ import { withTheme } from "emotion-theming";
 import { Constraint } from "../Constraint";
 import { Heading } from "../Heading";
 
-const Header = ({ title, intro, theme }) => (
+const Header = ({ intro, theme }) => (
   <header
     style={{
       textAlign: "center",
@@ -52,7 +52,7 @@ const Header = ({ title, intro, theme }) => (
             }}
           >
             <Heading level={1} size={1.3} weight={600}>
-              {title}
+              Design Studio Directory
             </Heading>
           </a>
         </Link>
@@ -76,7 +76,6 @@ const Header = ({ title, intro, theme }) => (
 );
 
 Header.propTypes = {
-  title: PropTypes.string.isRequired,
   intro: PropTypes.string
 };
 

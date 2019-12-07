@@ -20,6 +20,10 @@ const Container = styled.div`
   background-color: ${props => props.theme.colors.lightYellow};
 `;
 
+const VerticalSpace = styled.div`
+  margin-top: ${props => props.size};
+`;
+
 const RecentlyAdded = ({ studios }) => {
   const sortedStudios = [...studios]
     .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
@@ -30,7 +34,9 @@ const RecentlyAdded = ({ studios }) => {
         <Heading level={2} size={1.3}>
           Recently added studios
         </Heading>
+        <VerticalSpace size="2rem" />
         <StudiosGrid studios={sortedStudios} />
+        <VerticalSpace size="2rem" />
       </Constraint>
     </Container>
   );

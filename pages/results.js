@@ -6,6 +6,8 @@ import styled from "@emotion/styled";
 
 import { Constraint } from "../components/Constraint";
 import { Heading } from "../components/Heading";
+import { Header } from "../components/Header";
+import SEO from "../components/SEO";
 import { Layout } from "../components/Layout";
 import { StudiosGrid } from "../components/StudiosGrid";
 import { getStudios } from "../dataHelpers";
@@ -13,8 +15,7 @@ import { getStudios } from "../dataHelpers";
 const constraint = css`
   display: flex;
   flex-direction: column;
-  padding-top: 10rem;
-  padding-bottom: 6rem;
+  padding: 5rem 0;
   text-align: center;
 `;
 
@@ -23,15 +24,23 @@ const Container = styled.div`
 `;
 
 const ResultsPage = ({ studios, city, country }) => {
+  const hasResults = city && country && studios.length > 0;
+
   return (
-    <Layout>
+    <Layout
+      header={
+        <Header
+          intro={hasResults ? `${city}, ${country}` : "No studios found"}
+        />
+      }
+    >
+      <SEO title="Results" />
       <Container>
-        <Constraint css={constraint}>
-          <Heading level={2} size={1.3}>
-            {city}, {country}
-          </Heading>
-          <StudiosGrid studios={studios} />
-        </Constraint>
+        {hasResults && (
+          <Constraint css={constraint}>
+            <StudiosGrid studios={studios} />
+          </Constraint>
+        )}
       </Container>
     </Layout>
   );

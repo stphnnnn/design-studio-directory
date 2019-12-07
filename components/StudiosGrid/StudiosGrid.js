@@ -7,8 +7,6 @@ import { jsx, css } from "@emotion/core";
 import { Studio } from "../Studio";
 
 const StudiosContainer = styled.div`
-  margin-top: 2rem;
-
   @media only screen and (min-width: 800px) {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

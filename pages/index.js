@@ -9,6 +9,8 @@ import { RecentlyAdded } from "../components/RecentlyAdded";
 import { Select } from "../components/Select";
 
 import { getStudios, getCountries } from "../dataHelpers";
+import SEO from "../components/SEO";
+import { Header } from "../components/Header";
 
 const IndexPage = ({ studios, countries }) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -30,7 +32,11 @@ const IndexPage = ({ studios, countries }) => {
   }, [selectedCountry]);
 
   return (
-    <Layout>
+    <Layout
+      header={
+        <Header intro="An extensive list of design studios from around the world created to support designers in their search for their next opportunity." />
+      }
+    >
       <div
         css={{
           display: "flex",
@@ -41,6 +47,7 @@ const IndexPage = ({ studios, countries }) => {
           zIndex: 1
         }}
       >
+        <SEO title="Home" />
         <Select
           label="Pick a country"
           onChange={selectedItem => setSelectedCountry(selectedItem)}

@@ -25,11 +25,7 @@ const theme = {
   }
 };
 
-const title = "Design Studio Directory";
-const intro =
-  "An extensive list of design studios from around the world created to support designers in their search for their next opportunity.";
-
-const Layout = ({ children }) => (
+const Layout = ({ header, children }) => (
   <ThemeProvider theme={theme}>
     <Head>
       <link
@@ -55,7 +51,7 @@ const Layout = ({ children }) => (
         }
       `}
     />
-    <Header title={title} intro={intro} />
+    {header}
     <main>{children}</main>
     <Footer />
   </ThemeProvider>
