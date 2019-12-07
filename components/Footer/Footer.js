@@ -1,54 +1,69 @@
-import React from 'react';
+import React from "react";
+import styled from "@emotion/styled";
+import { withTheme } from "emotion-theming";
 
-import { Constraint } from '../Constraint';
-import { withTheme } from 'emotion-theming';
+import { Constraint } from "../Constraint";
+
+const PlainAnchor = styled.a`
+  text-decoration: none;
+  text-decoration-skip-ink: auto;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const Footer = ({ theme }) => (
   <footer
     style={{
-      backgroundColor: theme.colors.yellow,
+      backgroundColor: theme.colors.yellow
     }}
   >
     <Constraint>
       <div
         style={{
           height: 400,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center"
         }}
       >
-        <a
+        <PlainAnchor
           href="https://docs.google.com/forms/d/e/1FAIpQLSepMfctlDO-enGUdrEXObNgiBha63f5Kmkc-70s3ZOQhnbG4w/viewform"
           target="_blank"
           rel="noopener noreferrer"
           style={{
             fontWeight: 600,
-            textDecoration: 'none',
-            fontSize: '1.5rem',
+            fontSize: "1.5rem"
           }}
         >
           Suggest a studio
-        </a>
+        </PlainAnchor>
       </div>
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          alignItems: 'center',
+          display: "flex",
+          justifyContent: "space-around",
+          alignItems: "center",
           paddingBottom: `4rem`,
-          textAlign: 'center',
-          fontSize: '0.8rem',
+          textAlign: "center",
+          fontSize: "0.8rem"
         }}
       >
         <span>
-          A project by <a>Jamin Galea</a>
+          A project by{" "}
+          <PlainAnchor href="http://jamingalea.com/">Jamin Galea</PlainAnchor>
         </span>
         <span>
-          Built by <a>Steve Burtenshaw</a>
+          Built by{" "}
+          <PlainAnchor href="https://steveburtenshaw.com/">
+            Steve Burtenshaw
+          </PlainAnchor>
         </span>
         <span>
-          <a>@DesignStudioDir</a>
+          <PlainAnchor href="https://twitter.com/DesignStudioDir">
+            @DesignStudioDir
+          </PlainAnchor>
         </span>
       </div>
     </Constraint>
