@@ -22,7 +22,8 @@ const theme = {
     yellow: `#FBF201`,
     lightGrey: `#9197A4`,
     light: "#FFFFFF"
-  }
+  },
+  getFocusStyle: color => `box-shadow: 0 0 0 2px ${color}`
 };
 
 const Layout = ({ header, children }) => (
@@ -48,6 +49,11 @@ const Layout = ({ header, children }) => (
 
         a {
           color: inherit;
+        }
+
+        *:focus {
+          outline: 0;
+          box-shadow: 0 0 0 2px ${theme.colors.yellow};
         }
       `}
     />

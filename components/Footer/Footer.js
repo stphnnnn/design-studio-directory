@@ -15,10 +15,18 @@ const PlainAnchor = styled.a`
   &:hover {
     text-decoration: underline;
   }
+
+  &:focus {
+    ${props => props.theme.getFocusStyle(props.theme.colors.darkBlue)};
+  }
 `;
 
 const Anchor = styled.a`
   text-decoration-skip-ink: auto;
+
+  &:focus {
+    ${props => props.theme.getFocusStyle(props.theme.colors.darkBlue)};
+  }
 `;
 
 const Footer = () => {

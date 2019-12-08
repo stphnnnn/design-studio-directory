@@ -1,5 +1,8 @@
+/** @jsx jsx */
+
 import React from "react";
 import styled from "@emotion/styled";
+import { jsx, css } from "@emotion/core";
 import { useTheme } from "emotion-theming";
 
 import { Heading } from "../Heading";
@@ -21,9 +24,12 @@ const StudioItem = styled.div`
     text-decoration: none;
     transition: all 0.2s ease-in-out;
 
-    &:hover {
+    &:hover,
+    &:focus {
+      outline: 0;
       background-color: ${({ theme }) => theme.colors.darkBlue};
       color: ${({ theme }) => theme.colors.light};
+      box-shadow: none;
     }
   }
 
@@ -67,7 +73,11 @@ const StudioItem = styled.div`
       transition: all 0.2s ease-in-out;
     }
 
-    &:hover {
+    &:hover,
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+
       .studio__ic-twitter {
         fill: #3ba9ee;
         opacity: 1;
@@ -85,6 +95,7 @@ const truncateString = (str, num) => {
 
 const Studio = ({ name, locations, url, twitterHandle, image }) => {
   const [isMouseOver, setIsMouseOver] = React.useState(false);
+  const [isFocused, setIsFocused] = React.useState(false);
   const theme = useTheme();
 
   return (
@@ -93,6 +104,8 @@ const Studio = ({ name, locations, url, twitterHandle, image }) => {
         className="studio__link"
         onMouseEnter={() => setIsMouseOver(true)}
         onMouseLeave={() => setIsMouseOver(false)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
         target="_blank"
         rel="noopener noreferrer"
         href={url}
@@ -117,7 +130,9 @@ const Studio = ({ name, locations, url, twitterHandle, image }) => {
           </Heading>
         </span>
         <span className="studio__icon">
-          {isMouseOver && <ExtneralLink className="studio__ic-link" />}
+          {(isMouseOver || isFocused) && (
+            <ExtneralLink className="studio__ic-link" />
+          )}
         </span>
       </a>
       {twitterHandle && (
@@ -127,7 +142,7 @@ const Studio = ({ name, locations, url, twitterHandle, image }) => {
           rel="noopener noreferrer"
           href={`https://twitter.com/${twitterHandle}`}
         >
-          {isMouseOver ? (
+          {isMouseOver || isFocused ? (
             <ExtneralLink className="studio__ic-link" />
           ) : (
             <TwitterLogo className="studio__ic-twitter" />
