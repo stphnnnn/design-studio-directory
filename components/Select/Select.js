@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Downshift from "downshift";
 import VisuallyHidden from "../VisuallyHidden";
+import { transparentize } from "polished";
 
 const sizes = {
   LARGE: 100,
@@ -19,9 +20,8 @@ const Input = styled.input`
   font-weight: 600;
 
   &::placeholder {
-    color: white;
+    color: ${props => transparentize(props.isCompact ? 0.75 : 0, "#ffffff")};
     font-weight: 600;
-    opacity: ${props => (props.isCompact ? 0.25 : undefined)};
   }
 `;
 
