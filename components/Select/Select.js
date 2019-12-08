@@ -83,17 +83,31 @@ const Select = ({
               {...getToggleButtonProps({
                 "aria-label": isOpen ? "close menu" : "open menu"
               })}
-              style={{
-                position: "absolute",
-                top: 0,
-                right: 0,
-                bottom: 0,
-                left: 0,
-                width: "100%",
-                background: "none",
-                cursor: !disabled ? "pointer" : "auto",
-                border: "none"
-              }}
+              css={css`
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                background: none;
+                cursor: ${!disabled ? "pointer" : "auto"};
+                border: none;
+
+                &:focus {
+                  box-shadow: none;
+                  &::after {
+                    content: "";
+                    ${theme.getFocusStyle(theme.colors.yellow)};
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    position: absolute;
+                    z-index: 1;
+                  }
+                }
+              `}
               disabled={disabled}
             />
             <ArrowIcon

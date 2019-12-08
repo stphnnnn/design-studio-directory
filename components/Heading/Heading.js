@@ -31,7 +31,8 @@ const Heading = ({
 Heading.propTypes = {
   size: PropTypes.number,
   level: PropTypes.oneOf([1, 2, 3, 4, 5, 6]).isRequired,
-  weight: PropTypes.oneOf([300, 600])
+  weight: PropTypes.oneOf([300, 600]),
+  children: PropTypes.node
 };
 
 export default Heading;

@@ -36,6 +36,7 @@ const defaultButtonStyles = `
   letter-spacing: 0.05em;
   font-size: 0.66rem;
   cursor: pointer;
+  text-decoration: none;
 `;
 
 const ButtonAnchor = React.forwardRef(({ type = "primary", ...props }, ref) => {
@@ -47,7 +48,9 @@ const ButtonAnchor = React.forwardRef(({ type = "primary", ...props }, ref) => {
         color: ${theme.colors.yellow};
         border: 1px solid ${theme.colors.yellow};
     
-        &:hover {
+        &:hover,
+        &:focus {
+          box-shadow: none;
           color: ${theme.colors.darkBlue};
           background-color: ${theme.colors.yellow};
         }
@@ -58,7 +61,9 @@ const ButtonAnchor = React.forwardRef(({ type = "primary", ...props }, ref) => {
         color: ${theme.colors.darkBlue};
         border: 1px solid ${theme.colors.darkBlue};
 
-        &:hover {
+        &:hover,
+        &:focus {
+          box-shadow: none;
           color: ${theme.colors.yellow};
           background-color: ${theme.colors.darkBlue};
         }
@@ -69,6 +74,7 @@ const ButtonAnchor = React.forwardRef(({ type = "primary", ...props }, ref) => {
   return (
     <a
       ref={ref}
+      href={"/"}
       css={css`
         ${defaultButtonStyles}
         ${getButtonStyles()}
