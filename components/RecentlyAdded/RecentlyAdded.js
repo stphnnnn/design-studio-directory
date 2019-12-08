@@ -7,6 +7,7 @@ import { jsx, css } from "@emotion/core";
 import { Heading } from "../Heading";
 import { Constraint } from "../Constraint";
 import { StudiosGrid } from "../StudiosGrid";
+import VerticalSpace from "../VerticalSpace";
 
 const constraint = css`
   display: flex;
@@ -18,10 +19,6 @@ const constraint = css`
 
 const Container = styled.div`
   background-color: ${props => props.theme.colors.lightYellow};
-`;
-
-const VerticalSpace = styled.div`
-  margin-top: ${props => props.size};
 `;
 
 const RecentlyAdded = ({ studios }) => {

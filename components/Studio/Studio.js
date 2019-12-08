@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { withTheme } from "emotion-theming";
+import { useTheme } from "emotion-theming";
 
 import { Heading } from "../Heading";
 import { TwitterLogo, ExtneralLink } from "../icons";
@@ -48,7 +48,6 @@ const StudioItem = styled.div`
     position: absolute;
     right: 0;
     bottom: 0;
-    z-index: 1;
     height: 4rem;
     padding: 1rem;
     cursor: pointer;
@@ -84,8 +83,9 @@ const truncateString = (str, num) => {
   return str.slice(0, num) + "...";
 };
 
-const Studio = ({ name, locations, url, twitterHandle, image, theme }) => {
+const Studio = ({ name, locations, url, twitterHandle, image }) => {
   const [isMouseOver, setIsMouseOver] = React.useState(false);
+  const theme = useTheme();
 
   return (
     <StudioItem>
@@ -138,4 +138,4 @@ const Studio = ({ name, locations, url, twitterHandle, image, theme }) => {
   );
 };
 
-export default withTheme(Studio);
+export default Studio;

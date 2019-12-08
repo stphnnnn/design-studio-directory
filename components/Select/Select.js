@@ -1,5 +1,9 @@
+/** @jsx jsx */
+
 import React from "react";
 import styled from "@emotion/styled";
+import { css, jsx } from "@emotion/core";
+import { useTheme } from "emotion-theming";
 import Downshift from "downshift";
 import VisuallyHidden from "../VisuallyHidden";
 import { transparentize } from "polished";
@@ -15,7 +19,8 @@ const Input = styled.input`
   padding: 2rem;
   border-radius: 0;
   border: none;
-  background-color: ${props => (!props.isCompact ? "#242F47" : "#1A2233")};
+  background-color: ${props =>
+    props.isCompact ? props.theme.colors.blue : props.theme.colors.lightBlue};
   color: white;
   font-weight: 600;
 
@@ -40,6 +45,8 @@ const Select = ({
   onClose = Function.prototype,
   isCompact
 }) => {
+  const theme = useTheme();
+
   const handleStateChange = changes => {
     if (changes.isOpen === true) {
       return onOpen();
@@ -111,12 +118,20 @@ const Select = ({
             />
             <ul
               {...getMenuProps()}
-              style={{
-                position: "absolute",
-                top: "100%",
-                left: 0,
-                margin: 0
-              }}
+              css={css`
+                position: absolute;
+                top: 100%;
+                left: 0;
+                margin: 0;
+                background-color: ${theme.colors.lightBlue};
+                width: 100%;
+                color: ${theme.colors.light};
+                max-height: 375px;
+                overflow: scroll;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+              `}
             >
               {isOpen &&
                 options.map((item, index) => (
@@ -127,11 +142,14 @@ const Select = ({
                       item,
                       style: {
                         backgroundColor:
-                          highlightedIndex === index ? "lightgray" : null,
+                          highlightedIndex === index ? theme.colors.blue : null,
                         fontWeight: selectedItem === item ? "bold" : "normal",
                         cursor: "pointer"
                       }
                     })}
+                    css={css`
+                      padding: 0.3rem 1rem;
+                    `}
                   >
                     {item}
                   </li>

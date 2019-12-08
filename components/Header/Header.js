@@ -5,14 +5,16 @@ import { withTheme } from "emotion-theming";
 
 import { Constraint } from "../Constraint";
 import { Heading } from "../Heading";
+import VerticalSpace from "../VerticalSpace";
 
-const Header = ({ intro, theme }) => (
+const Header = ({ children, isCompact, theme }) => (
   <header
     style={{
       textAlign: "center",
       backgroundColor: theme.colors.darkBlue,
       color: theme.colors.light,
-      position: "relative"
+      position: "relative",
+      overflowX: "hidden"
     }}
   >
     <div
@@ -59,17 +61,17 @@ const Header = ({ intro, theme }) => (
       </div>
       <div
         style={{
-          height: 600,
+          height: isCompact ? 400 : 500,
           display: "flex",
           alignItems: "center",
-          justifyContent: "center"
+          justifyContent: "center",
+          flexDirection: "column",
+          maxWidth: 750,
+          margin: "0 auto"
         }}
       >
-        {intro && (
-          <Heading level={2} size={1.9} lineHeight={1.5} weight={300}>
-            {intro}
-          </Heading>
-        )}
+        {children}
+        <VerticalSpace size="2rem" />
       </div>
     </Constraint>
   </header>

@@ -4,6 +4,7 @@ import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import { jsx } from "@emotion/core";
 
+import { Heading } from "../components/Heading";
 import { Layout } from "../components/Layout";
 import { RecentlyAdded } from "../components/RecentlyAdded";
 import { Select } from "../components/Select";
@@ -17,8 +18,10 @@ const IndexPage = ({ studios, countries }) => {
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [activeField, setActiveField] = React.useState(0);
 
-  const countryOptions = Object.keys(countries);
-  const cityOptions = selectedCountry ? countries[selectedCountry] : [];
+  const countryOptions = Object.keys(countries).sort();
+  const cityOptions = selectedCountry
+    ? [...countries[selectedCountry]].sort()
+    : [];
 
   const handleCityChange = selectedItem => {
     setIsLoading(true);
@@ -37,7 +40,12 @@ const IndexPage = ({ studios, countries }) => {
   return (
     <Layout
       header={
-        <Header intro="An extensive list of design studios from around the world created to support designers in their search for their next opportunity." />
+        <Header>
+          <Heading level={2} size={1.9} lineHeight={1.5} weight={300}>
+            An extensive list of design studios from around the world created to
+            support designers in their search for their next opportunity.
+          </Heading>
+        </Header>
       }
     >
       <div

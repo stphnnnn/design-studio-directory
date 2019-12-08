@@ -13,8 +13,8 @@ const StudiosContainer = styled.div`
   }
 `;
 
-const StudiosGrid = ({ studios }) => (
-  <StudiosContainer>
+const StudiosGrid = ({ studios, ...props }) => (
+  <StudiosContainer {...props}>
     {studios.map((studio, i) => (
       <Studio key={`${studio.name}-${i}`} {...studio} />
     ))}
