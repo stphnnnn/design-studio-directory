@@ -1,88 +1,97 @@
-import React from 'react'
-import Head from 'next/head'
-import Nav from '../components/nav'
+/** @jsx jsx */
+import React from "react";
+import Router from "next/router";
+import fetch from "isomorphic-unfetch";
+import { jsx } from "@emotion/core";
 
-const Home = () => (
-  <div>
-    <Head>
-      <title>Home</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
+import { Heading } from "../components/Heading";
+import { Layout } from "../components/Layout";
+import { RecentlyAdded } from "../components/RecentlyAdded";
+import { Select } from "../components/Select";
 
-    <Nav />
+import { getStudios, getCountries } from "../dataHelpers";
+import SEO from "../components/SEO";
+import { Header } from "../components/Header";
 
-    <div className="hero">
-      <h1 className="title">Welcome to Next.js!</h1>
-      <p className="description">
-        To get started, edit <code>pages/index.js</code> and save to reload.
-      </p>
+const IndexPage = ({ studios, countries }) => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [selectedCountry, setSelectedCountry] = React.useState(null);
+  const [activeField, setActiveField] = React.useState(0);
 
-      <div className="row">
-        <a href="https://nextjs.org/docs" className="card">
-          <h3>Documentation &rarr;</h3>
-          <p>Learn more about Next.js in the documentation.</p>
-        </a>
-        <a href="https://nextjs.org/learn" className="card">
-          <h3>Next.js Learn &rarr;</h3>
-          <p>Learn about Next.js by following an interactive tutorial!</p>
-        </a>
-        <a
-          href="https://github.com/zeit/next.js/tree/master/examples"
-          className="card"
-        >
-          <h3>Examples &rarr;</h3>
-          <p>Find other example boilerplates on the Next.js GitHub.</p>
-        </a>
+  const countryOptions = Object.keys(countries).sort();
+  const cityOptions = selectedCountry
+    ? [...countries[selectedCountry]].sort()
+    : [];
+
+  const handleCityChange = selectedItem => {
+    setIsLoading(true);
+    Router.push(
+      `/results?country=${selectedCountry}&city=${selectedItem}`,
+      `/results/${selectedCountry}/${selectedItem}`
+    );
+  };
+
+  React.useEffect(() => {
+    if (selectedCountry) {
+      setActiveField(1);
+    }
+  }, [selectedCountry]);
+
+  return (
+    <Layout
+      header={
+        <Header>
+          <Heading level={2} size={1.9} lineHeight={1.5} weight={300}>
+            An extensive list of design studios from around the world created to
+            support designers in their search for their next opportunity.
+          </Heading>
+        </Header>
+      }
+    >
+      <div
+        css={{
+          display: "flex",
+          width: "100%",
+          justifyContent: "center",
+          position: "absolute",
+          transform: "translateY(-50%)",
+          zIndex: 1
+        }}
+      >
+        <SEO title="Home" />
+        <Select
+          label="Pick a country"
+          onChange={selectedItem => setSelectedCountry(selectedItem)}
+          options={countryOptions}
+          isCompact={activeField !== 0}
+          disabled={isLoading}
+          onOpen={() => setActiveField(0)}
+          onClose={() => selectedCountry && setActiveField(1)}
+        />
+        <Select
+          label="Pick a city"
+          options={cityOptions}
+          onChange={handleCityChange}
+          isCompact={activeField !== 1}
+          disabled={isLoading || !Boolean(selectedCountry)}
+          onOpen={() => setActiveField(1)}
+        />
       </div>
-    </div>
+      <RecentlyAdded studios={studios} />
+    </Layout>
+  );
+};
 
-    <style jsx>{`
-      .hero {
-        width: 100%;
-        color: #333;
-      }
-      .title {
-        margin: 0;
-        width: 100%;
-        padding-top: 80px;
-        line-height: 1.15;
-        font-size: 48px;
-      }
-      .title,
-      .description {
-        text-align: center;
-      }
-      .row {
-        max-width: 880px;
-        margin: 80px auto 40px;
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-      }
-      .card {
-        padding: 18px 18px 24px;
-        width: 220px;
-        text-align: left;
-        text-decoration: none;
-        color: #434343;
-        border: 1px solid #9b9b9b;
-      }
-      .card:hover {
-        border-color: #067df7;
-      }
-      .card h3 {
-        margin: 0;
-        color: #067df7;
-        font-size: 18px;
-      }
-      .card p {
-        margin: 0;
-        padding: 12px 0 0;
-        font-size: 13px;
-        color: #333;
-      }
-    `}</style>
-  </div>
-)
+IndexPage.getInitialProps = async () => {
+  const apiUrl = "https://api.sheety.co/46c50c36-f98f-4270-812c-f78377b90306";
 
-export default Home
+  const res = await fetch(apiUrl);
+  const data = await res.json();
+
+  const studios = getStudios(data);
+  const countries = getCountries(studios);
+
+  return { studios, countries };
+};
+
+export default IndexPage;
