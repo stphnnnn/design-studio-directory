@@ -4,10 +4,10 @@ import React from "react";
 import styled from "@emotion/styled";
 import { jsx, css } from "@emotion/core";
 
-import { Heading } from "../Heading";
-import { Constraint } from "../Constraint";
-import { StudiosGrid } from "../StudiosGrid";
-import VerticalSpace from "../VerticalSpace";
+import Heading from "./Heading";
+import Constraint from "./Constraint";
+import StudiosGrid from "./StudiosGrid";
+import VerticalSpace from "./VerticalSpace";
 
 const constraint = css`
   display: flex;

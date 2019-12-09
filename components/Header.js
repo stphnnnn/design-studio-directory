@@ -6,13 +6,11 @@ import Link from "next/link";
 import { jsx, css } from "@emotion/core";
 import { useTheme } from "emotion-theming";
 
-import { Constraint } from "../Constraint";
-import { Heading } from "../Heading";
-import VerticalSpace from "../VerticalSpace";
+import Constraint from "./Constraint";
+import Heading from "./Heading";
+import VerticalSpace from "./VerticalSpace";
 
 const LogoAnchor = React.forwardRef((props, ref) => {
-  const theme = useTheme();
-
   return (
     <Heading level={1} size={1.3} weight={600}>
       <a

@@ -4,12 +4,7 @@ import Head from "next/head";
 import { Global, css } from "@emotion/core";
 import { ThemeProvider } from "emotion-theming";
 
-import { Footer } from "../Footer";
-import { Header } from "../Header";
-
-// import "./layout.css"
-
-// import "normalize.css/normalize.css";
+import Footer from "../Footer";
 
 import reset from "./reset";
 

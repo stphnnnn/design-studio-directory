@@ -4,14 +4,14 @@ import Router from "next/router";
 import fetch from "isomorphic-unfetch";
 import { jsx } from "@emotion/core";
 
-import { Heading } from "../components/Heading";
+import Heading from "../components/Heading";
 import { Layout } from "../components/Layout";
-import { RecentlyAdded } from "../components/RecentlyAdded";
-import { Select } from "../components/Select";
+import RecentlyAdded from "../components/RecentlyAdded";
+import Select from "../components/Select";
 
 import { getStudios, getCountries } from "../dataHelpers";
 import SEO from "../components/SEO";
-import { Header } from "../components/Header";
+import Header from "../components/Header";
 
 const IndexPage = ({ studios, countries }) => {
   const [isLoading, setIsLoading] = React.useState(false);
