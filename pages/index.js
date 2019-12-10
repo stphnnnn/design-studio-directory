@@ -47,6 +47,7 @@ const IndexPage = ({ studios, countries }) => {
           </Heading>
         </Header>
       }
+      showLoadingSpinner={isLoading}
     >
       <div
         css={{
