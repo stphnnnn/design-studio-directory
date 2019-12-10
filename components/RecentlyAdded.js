@@ -4,10 +4,12 @@ import React from "react";
 import styled from "@emotion/styled";
 import { jsx, css } from "@emotion/core";
 
-import { Heading } from "../Heading";
-import { Constraint } from "../Constraint";
-import { StudiosGrid } from "../StudiosGrid";
-import VerticalSpace from "../VerticalSpace";
+import Heading from "./Heading";
+import Constraint from "./Constraint";
+import StudiosGrid from "./StudiosGrid";
+import VerticalSpace from "./VerticalSpace";
+
+const MAX_STUDIOS_COUNT = 18;
 
 const constraint = css`
   display: flex;
@@ -24,7 +26,7 @@ const Container = styled.div`
 const RecentlyAdded = ({ studios }) => {
   const sortedStudios = [...studios]
     .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
-    .slice(0, 9);
+    .slice(0, MAX_STUDIOS_COUNT);
   return (
     <Container>
       <Constraint css={constraint}>

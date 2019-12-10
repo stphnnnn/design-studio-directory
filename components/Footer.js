@@ -5,8 +5,8 @@ import styled from "@emotion/styled";
 import { css, jsx } from "@emotion/core";
 import { useTheme } from "emotion-theming";
 
-import { Constraint } from "../Constraint";
-import { TwitterLogo } from "../icons";
+import Constraint from "./Constraint";
+import { TwitterLogo } from "./icons";
 
 const PlainAnchor = styled.a`
   text-decoration: none;
@@ -37,7 +37,11 @@ const Footer = () => {
         backgroundColor: theme.colors.yellow
       }}
     >
-      <Constraint>
+      <Constraint
+        css={css`
+          max-width: 660px;
+        `}
+      >
         <div
           style={{
             padding: "6rem 0",

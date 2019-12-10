@@ -6,12 +6,12 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { useTheme } from "emotion-theming";
 
-import { Constraint } from "../../../components/Constraint";
-import { Header } from "../../../components/Header";
-import { Heading } from "../../../components/Heading";
+import Constraint from "../../../components/Constraint";
+import Header from "../../../components/Header";
+import Heading from "../../../components/Heading";
 import SEO from "../../../components/SEO";
 import { Layout } from "../../../components/Layout";
-import { StudiosGrid } from "../../../components/StudiosGrid";
+import StudiosGrid from "../../../components/StudiosGrid";
 import VerticalSpace from "../../../components/VerticalSpace";
 import { getStudios } from "../../../dataHelpers";
 

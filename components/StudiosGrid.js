@@ -4,7 +4,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { jsx, css } from "@emotion/core";
 
-import { Studio } from "../Studio";
+import Studio from "./Studio";
 
 const StudiosContainer = styled.div`
   @media only screen and (min-width: 800px) {

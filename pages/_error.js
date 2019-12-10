@@ -1,8 +1,8 @@
 import React from "react";
 
 import { Layout } from "../components/Layout";
-import { Header } from "../components/Header";
-import { Heading } from "../components/Heading";
+import Header from "../components/Header";
+import Heading from "../components/Heading";
 import SEO from "../components/SEO";
 
 function ErrorPage({ statusCode }) {

@@ -5,8 +5,8 @@ import styled from "@emotion/styled";
 import { jsx, css } from "@emotion/core";
 import { useTheme } from "emotion-theming";
 
-import { Heading } from "../Heading";
-import { TwitterLogo, ExtneralLink } from "../icons";
+import Heading from "./Heading";
+import { TwitterLogo, ExtneralLink } from "./icons";
 
 const StudioItem = styled.div`
   position: relative;
