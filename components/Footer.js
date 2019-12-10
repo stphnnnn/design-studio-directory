@@ -37,7 +37,11 @@ const Footer = () => {
         backgroundColor: theme.colors.yellow
       }}
     >
-      <Constraint>
+      <Constraint
+        css={css`
+          max-width: 660px;
+        `}
+      >
         <div
           style={{
             padding: "6rem 0",
