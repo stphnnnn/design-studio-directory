@@ -141,10 +141,11 @@ const Select = ({
                 width: 100%;
                 color: ${theme.colors.light};
                 max-height: 375px;
-                overflow: scroll;
+                overflow-y: scroll;
                 list-style: none;
                 margin: 0;
                 padding: 0;
+                height: ${isOpen ? "auto" : 0};
               `}
             >
               {isOpen &&

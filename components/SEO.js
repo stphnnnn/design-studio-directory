@@ -2,14 +2,16 @@ import React from "react";
 import PropTypes from "prop-types";
 import Head from "next/head";
 
+const BASE_URL = "https://designstudio.directory";
+
 const commonMeta = {
   description:
     "An extensive list of design studios from all around the world. Created to support students and designers in their search for internships and full-time employment.",
-  image: "",
+  image: `${BASE_URL}/social-media-banner.jpg`,
   twitterHandle: "@DesignStudioDir"
 };
 
-function SEO({ title, url = "https://designstudio.directory" }) {
+function SEO({ title, url = BASE_URL }) {
   return (
     <Head>
       <title>{title} | Design Studio Directory</title>
