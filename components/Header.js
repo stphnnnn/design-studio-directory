@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { jsx, css } from "@emotion/core";
 import { useTheme } from "emotion-theming";
+import { motion, useViewportScroll, useTransform } from "framer-motion";
 
 import Constraint from "./Constraint";
 import Heading from "./Heading";
@@ -30,6 +31,13 @@ const LogoAnchor = React.forwardRef((props, ref) => {
 const Header = ({ children, isCompact }) => {
   const theme = useTheme();
 
+  const { scrollY } = useViewportScroll();
+
+  const inRange = [0, 500];
+
+  const translateY = useTransform(scrollY, inRange, [0, 150]);
+  const opacity = useTransform(scrollY, inRange, [0.25, 0]);
+
   return (
     <header
       style={{
@@ -40,7 +48,7 @@ const Header = ({ children, isCompact }) => {
         overflowX: "hidden"
       }}
     >
-      <div
+      <motion.div
         style={{
           fontSize: "11rem",
           color: theme.colors.lightBlue,
@@ -48,17 +56,18 @@ const Header = ({ children, isCompact }) => {
           textAlign: "left",
           lineHeight: 0.9,
           position: "absolute",
-          top: "-5rem",
+          top: `-5rem`,
           left: "50%",
           whiteSpace: "nowrap",
-          transform: "translateX(-50%)",
-          opacity: 0.25,
+          translateX: "-50%",
+          translateY,
+          opacity,
           userSelect: "none"
         }}
       >
         Design Studio
         <br /> Directory
-      </div>
+      </motion.div>
       <Constraint
         style={{
           position: "relative",
@@ -84,6 +93,11 @@ const Header = ({ children, isCompact }) => {
             maxWidth: 750,
             margin: "0 auto"
           }}
+          css={props => css`
+            ${props.mq.md} {
+              paddingbottom: "2rem";
+            }
+          `}
         >
           {children}
           <VerticalSpace size="2rem" />

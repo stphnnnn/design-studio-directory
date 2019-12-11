@@ -3,7 +3,7 @@ import React from "react";
 import Router from "next/router";
 import absoluteUrl from "next-absolute-url";
 import fetch from "isomorphic-unfetch";
-import { jsx } from "@emotion/core";
+import { jsx, css } from "@emotion/core";
 
 import Heading from "../components/Heading";
 import { Layout } from "../components/Layout";
@@ -12,6 +12,11 @@ import Select from "../components/Select";
 
 import SEO from "../components/SEO";
 import Header from "../components/Header";
+
+const sizes = {
+  LARGE: 100,
+  SMALL: 75
+};
 
 const IndexPage = ({ studios, locations }) => {
   const [isLoading, setIsLoading] = React.useState(false);
@@ -50,14 +55,16 @@ const IndexPage = ({ studios, locations }) => {
       showLoadingSpinner={isLoading}
     >
       <div
-        css={{
-          display: "flex",
-          width: "100%",
-          justifyContent: "center",
-          position: "absolute",
-          transform: "translateY(-50%)",
-          zIndex: 1
-        }}
+        css={props => css`
+          ${props.mq.md} {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+            position: absolute;
+            transform: translateY(-50%);
+            z-index: 1;
+          }
+        `}
       >
         <SEO title="Home" />
         <Select
@@ -68,6 +75,13 @@ const IndexPage = ({ studios, locations }) => {
           disabled={isLoading}
           onOpen={() => setActiveField(0)}
           onClose={() => selectedCountry && setActiveField(1)}
+          css={props => css`
+            ${props.mq.md} {
+              top: ${activeField !== 0
+                ? `${(sizes.LARGE - sizes.SMALL) / 2}px`
+                : undefined};
+            }
+          `}
         />
         <Select
           label="Pick a city"
@@ -76,6 +90,13 @@ const IndexPage = ({ studios, locations }) => {
           isCompact={activeField !== 1}
           disabled={isLoading || !Boolean(selectedCountry)}
           onOpen={() => setActiveField(1)}
+          css={props => css`
+            ${props.mq.md} {
+              top: ${activeField !== 1
+                ? `${(sizes.LARGE - sizes.SMALL) / 2}px`
+                : undefined};
+            }
+          `}
         />
       </div>
       <RecentlyAdded studios={studios} />

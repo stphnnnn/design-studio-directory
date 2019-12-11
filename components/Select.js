@@ -14,7 +14,7 @@ const sizes = {
 };
 
 const Input = styled.input`
-  width: 350px;
+  width: 100%;
   height: ${props => (props.isCompact ? sizes.SMALL : sizes.LARGE)}px;
   padding: 2rem;
   border-radius: 0;
@@ -43,7 +43,8 @@ const Select = ({
   onChange = Function.prototype,
   onOpen = Function.prototype,
   onClose = Function.prototype,
-  isCompact
+  isCompact,
+  className
 }) => {
   const theme = useTheme();
 
@@ -72,9 +73,9 @@ const Select = ({
         }) => (
           <div
             style={{
-              position: "relative",
-              top: isCompact ? (sizes.LARGE - sizes.SMALL) / 2 : undefined
+              position: "relative"
             }}
+            className={className}
           >
             <VisuallyHidden>
               <label {...getLabelProps()}>{label}</label>
@@ -134,6 +135,7 @@ const Select = ({
               {...getMenuProps()}
               css={css`
                 position: absolute;
+                z-index: 1;
                 top: 100%;
                 left: 0;
                 margin: 0;

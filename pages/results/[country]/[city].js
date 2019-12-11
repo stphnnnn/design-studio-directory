@@ -16,7 +16,8 @@ import StudiosGrid from "../../../components/StudiosGrid";
 import VerticalSpace from "../../../components/VerticalSpace";
 
 const constraint = css`
-  padding: 5rem 0;
+  padding-top: 5rem;
+  padding-bottom: 5rem;
   text-align: center;
 `;
 

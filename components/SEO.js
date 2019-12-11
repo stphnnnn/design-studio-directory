@@ -12,20 +12,22 @@ const commonMeta = {
 };
 
 function SEO({ title, url = BASE_URL }) {
+  const metaTitle = `${title} | Design Studio Directory`;
+
   return (
     <Head>
-      <title>{title} | Design Studio Directory</title>
+      <title>{metaTitle} | Design Studio Directory</title>
       <meta name="description" content={commonMeta.description} />
 
       {/* Twitter Card */}
       <meta name="twitter:card" value="summary" />
       <meta name="twitter:site" content={commonMeta.twitterHandle} />
-      <meta name="twitter:title" content={title} />
+      <meta name="twitter:title" content={metaTitle} />
       <meta name="twitter:description" content={commonMeta.description} />
       <meta name="twitter:image" content={commonMeta.image} />
 
       {/* Open Graph Data */}
-      <meta property="og:title" content={title} />
+      <meta property="og:title" content={metaTitle} />
       <meta property="og:type" content="website" />
       <meta property="og:url" content={url} />
       <meta property="og:image" content={commonMeta.image} />

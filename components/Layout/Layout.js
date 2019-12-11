@@ -11,6 +11,13 @@ import Footer from "../Footer";
 
 import reset from "./reset";
 
+const breakpoints = {
+  sm: 576,
+  md: 768,
+  lg: 992,
+  xl: 1200
+};
+
 const theme = {
   colors: {
     darkBlue: `#111521`,
@@ -21,6 +28,13 @@ const theme = {
     lightGrey: `#9197A4`,
     light: "#FFFFFF"
   },
+  mq: Object.entries(breakpoints).reduce(
+    (breakpoints, [bp, value]) => ({
+      ...breakpoints,
+      [bp]: `@media (min-width: ${value}px)`
+    }),
+    {}
+  ),
   getFocusStyle: color => `box-shadow: 0 0 0 2px ${color}`
 };
 
