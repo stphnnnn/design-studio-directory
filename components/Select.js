@@ -14,7 +14,7 @@ const sizes = {
 };
 
 const Input = styled.input`
-  width: 350px;
+  width: 100%;
   height: ${props => (props.isCompact ? sizes.SMALL : sizes.LARGE)}px;
   padding: 2rem;
   border-radius: 0;
