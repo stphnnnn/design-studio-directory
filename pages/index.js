@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import React from "react";
 import Router from "next/router";
+import absoluteUrl from "next-absolute-url";
 import fetch from "isomorphic-unfetch";
 import { jsx } from "@emotion/core";
 
@@ -9,24 +10,23 @@ import { Layout } from "../components/Layout";
 import RecentlyAdded from "../components/RecentlyAdded";
 import Select from "../components/Select";
 
-import { getStudios, getCountries } from "../dataHelpers";
 import SEO from "../components/SEO";
 import Header from "../components/Header";
 
-const IndexPage = ({ studios, countries }) => {
+const IndexPage = ({ studios, locations }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [activeField, setActiveField] = React.useState(0);
 
-  const countryOptions = Object.keys(countries).sort();
+  const countryOptions = Object.keys(locations).sort();
   const cityOptions = selectedCountry
-    ? [...countries[selectedCountry]].sort()
+    ? [...locations[selectedCountry]].sort()
     : [];
 
   const handleCityChange = selectedItem => {
     setIsLoading(true);
     Router.push(
-      `/results?country=${selectedCountry}&city=${selectedItem}`,
+      `/results/[country]/[city]`,
       `/results/${selectedCountry}/${selectedItem}`
     );
   };
@@ -83,16 +83,13 @@ const IndexPage = ({ studios, countries }) => {
   );
 };
 
-IndexPage.getInitialProps = async () => {
-  const apiUrl = "https://api.sheety.co/46c50c36-f98f-4270-812c-f78377b90306";
+IndexPage.getInitialProps = async ({ req }) => {
+  const { origin } = absoluteUrl(req);
 
-  const res = await fetch(apiUrl);
-  const data = await res.json();
+  const res = await fetch(`${origin}/api`);
+  const { studios, locations } = await res.json();
 
-  const studios = getStudios(data);
-  const countries = getCountries(studios);
-
-  return { studios, countries };
+  return { studios, locations };
 };
 
 export default IndexPage;

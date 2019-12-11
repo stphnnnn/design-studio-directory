@@ -1,5 +1,6 @@
 /** @jsx jsx */
 import React from "react";
+import absoluteUrl from "next-absolute-url";
 import Link from "next/link";
 import fetch from "isomorphic-unfetch";
 import { css, jsx } from "@emotion/core";
@@ -13,7 +14,6 @@ import SEO from "../../../components/SEO";
 import { Layout } from "../../../components/Layout";
 import StudiosGrid from "../../../components/StudiosGrid";
 import VerticalSpace from "../../../components/VerticalSpace";
-import { getStudios } from "../../../dataHelpers";
 
 const constraint = css`
   padding: 5rem 0;
@@ -134,10 +134,10 @@ const ResultsPage = ({ studios, city, country }) => {
   );
 };
 
-ResultsPage.getInitialProps = async ({ query }) => {
-  const apiUrl = "https://api.sheety.co/46c50c36-f98f-4270-812c-f78377b90306";
+ResultsPage.getInitialProps = async ({ req, query }) => {
+  const { origin } = absoluteUrl(req);
 
-  const res = await fetch(apiUrl);
+  const res = await fetch(`${origin}/api`);
   const data = await res.json();
 
   const { city, country } = query;
@@ -145,7 +145,7 @@ ResultsPage.getInitialProps = async ({ query }) => {
   const isSelectedLocation = location =>
     location.country === country && location.city === city;
 
-  const studios = getStudios(data)
+  const studios = data.studios
     .filter(studio =>
       // Only show studios in the selected location
       studio.locations.some(location => isSelectedLocation(location))
