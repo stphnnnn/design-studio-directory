@@ -26,7 +26,7 @@ const IndexPage = ({ studios, locations }) => {
   const handleCityChange = selectedItem => {
     setIsLoading(true);
     Router.push(
-      `/results?country=${selectedCountry}&city=${selectedItem}`,
+      `/results/[country]/[city]`,
       `/results/${selectedCountry}/${selectedItem}`
     );
   };

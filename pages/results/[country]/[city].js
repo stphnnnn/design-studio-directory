@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React from "react";
-import Link from "next/link";
 import absoluteUrl from "next-absolute-url";
+import Link from "next/link";
 import fetch from "isomorphic-unfetch";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";

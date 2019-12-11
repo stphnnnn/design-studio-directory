@@ -8,15 +8,6 @@
           "value": "max-age=3600, public"
         }
       ]
-    },
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "max-age=3600, public"
-        }
-      ]
     }
   ]
 }
