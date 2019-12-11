@@ -6,6 +6,7 @@ import styled from "@emotion/styled";
 import { Global, css } from "@emotion/core";
 import { ThemeProvider } from "emotion-theming";
 
+import { useLogPageView } from "../../analytics";
 import Footer from "../Footer";
 
 import reset from "./reset";
@@ -65,6 +66,8 @@ const LoadingSpinner = () => (
 
 const Layout = ({ header, children }) => {
   const [isLoading, setIsLoading] = React.useState(false);
+
+  useLogPageView();
 
   React.useEffect(() => {
     const showLoader = () => setIsLoading(true);
