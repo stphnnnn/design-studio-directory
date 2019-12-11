@@ -91,7 +91,8 @@ const Header = ({ children, isCompact }) => {
             justifyContent: "center",
             flexDirection: "column",
             maxWidth: 750,
-            margin: "0 auto"
+            margin: "0 auto",
+            paddingBottom: "2rem"
           }}
         >
           {children}
