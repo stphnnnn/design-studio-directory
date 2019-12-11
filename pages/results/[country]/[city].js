@@ -113,7 +113,7 @@ const ResultsPage = ({ studios, city, country }) => {
         </Header>
       }
     >
-      <SEO title="Results" />
+      <SEO title={`Studios in ${city}, ${country}`} />
       <Container>
         {hasResults && (
           <Constraint css={constraint}>
