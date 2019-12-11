@@ -113,7 +113,10 @@ const ResultsPage = ({ studios, city, country }) => {
         </Header>
       }
     >
-      <SEO title={`Studios in ${city}, ${country}`} />
+      <SEO
+        title={`Studios in ${city}, ${country}`}
+        url={`https://designstudio.directory/${country}/${city}`}
+      />
       <Container>
         {hasResults && (
           <Constraint css={constraint}>
