@@ -91,9 +91,13 @@ const Header = ({ children, isCompact }) => {
             justifyContent: "center",
             flexDirection: "column",
             maxWidth: 750,
-            margin: "0 auto",
-            paddingBottom: "2rem"
+            margin: "0 auto"
           }}
+          css={props => css`
+            ${props.mq.md} {
+              paddingbottom: "2rem";
+            }
+          `}
         >
           {children}
           <VerticalSpace size="2rem" />
