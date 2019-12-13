@@ -1,7 +1,7 @@
-const createDate = string => {
-  const parts = string.split("-");
-  return new Date(parts[0], parts[1] - 1, parts[2]);
-};
+import parse from "date-fns/parse";
+
+const createDate = dateString =>
+  parse(dateString, "yyyy-MM-dd", new Date("1960", "06", "06"));
 
 const getStudios = data => {
   return data.map(studio => {
