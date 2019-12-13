@@ -98,8 +98,6 @@ const Studio = ({ name, locations, url, twitterHandle, image }) => {
   const [isFocused, setIsFocused] = React.useState(false);
   const theme = useTheme();
 
-  console.log(name, url);
-
   return (
     <StudioItem>
       <a
