@@ -23,6 +23,7 @@ const Input = styled.input`
     props.isCompact ? props.theme.colors.blue : props.theme.colors.lightBlue};
   color: white;
   font-weight: 600;
+  opacity: 1;
 
   &::placeholder {
     color: ${props => transparentize(props.isCompact ? 0.75 : 0, "#ffffff")};
