@@ -24,9 +24,8 @@ const Container = styled.div`
 `;
 
 const RecentlyAdded = ({ studios }) => {
-  const sortedStudios = [...studios]
-    .sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded))
-    .slice(0, MAX_STUDIOS_COUNT);
+  const sortedStudios = [...studios].slice(0, MAX_STUDIOS_COUNT);
+
   return (
     <Container>
       <Constraint css={constraint}>

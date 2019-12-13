@@ -15,8 +15,8 @@ const StudiosContainer = styled.div`
 
 const StudiosGrid = ({ studios, ...props }) => (
   <StudiosContainer {...props}>
-    {studios.map((studio, i) => (
-      <Studio key={`${studio.name}-${i}`} {...studio} />
+    {studios.map(studio => (
+      <Studio key={studio.id} {...studio} />
     ))}
   </StudiosContainer>
 );
