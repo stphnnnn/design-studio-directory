@@ -28,7 +28,7 @@ const LogoAnchor = React.forwardRef((props, ref) => {
   );
 });
 
-const Header = ({ children, isCompact }) => {
+const Header = ({ children }) => {
   const theme = useTheme();
 
   const { scrollY } = useViewportScroll();
@@ -85,7 +85,7 @@ const Header = ({ children, isCompact }) => {
         </div>
         <div
           style={{
-            height: isCompact ? 400 : 500,
+            height: 400,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

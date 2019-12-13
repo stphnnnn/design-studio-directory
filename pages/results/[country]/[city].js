@@ -91,7 +91,7 @@ const ResultsPage = ({ studios, city, country }) => {
   return (
     <Layout
       header={
-        <Header isCompact>
+        <Header>
           {hasResults ? (
             <div>
               <Heading level={3} size={1.9} lineHeight={1.5} weight={300}>
