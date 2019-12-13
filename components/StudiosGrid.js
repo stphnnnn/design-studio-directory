@@ -13,12 +13,16 @@ const StudiosContainer = styled.div`
   }
 `;
 
-const StudiosGrid = ({ studios, ...props }) => (
-  <StudiosContainer {...props}>
-    {studios.map((studio, i) => (
-      <Studio key={`${studio.name}-${i}`} {...studio} />
-    ))}
-  </StudiosContainer>
-);
+const StudiosGrid = ({ studios, ...props }) => {
+  console.log(studios);
+  return (
+    <StudiosContainer {...props}>
+      {studios.map((studio, i) => {
+        console.log(studio, i);
+        return <Studio key={`${studio.name}-${i}`} {...studio} />;
+      })}
+    </StudiosContainer>
+  );
+};
 
 export default StudiosGrid;
