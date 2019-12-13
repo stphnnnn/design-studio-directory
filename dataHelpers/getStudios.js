@@ -1,4 +1,5 @@
 import parse from "date-fns/parse";
+import shortid from "shortid";
 
 const createDate = dateString =>
   parse(dateString, "yyyy-MM-dd", new Date("1960", "06", "06"));
@@ -26,6 +27,7 @@ const getStudios = data => {
     const { twitterHandle, url } = studio;
 
     return {
+      id: shortid.generate(),
       name,
       locations,
       dateAdded,
