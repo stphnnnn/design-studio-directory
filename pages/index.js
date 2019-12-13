@@ -47,8 +47,7 @@ const IndexPage = ({ studios, locations }) => {
       header={
         <Header>
           <Heading level={2} size={1.9} lineHeight={1.5} weight={300}>
-            An extensive list of design studios from around the world created to
-            support designers in their search for their next opportunity.
+            An extensive list of design studios from around the world.
           </Heading>
         </Header>
       }
