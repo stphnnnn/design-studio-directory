@@ -3,8 +3,6 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { jsx, css } from "@emotion/core";
-import parseISO from "date-fns/parseISO";
-import compareDesc from "date-fns/compareDesc";
 
 import Heading from "./Heading";
 import Constraint from "./Constraint";
@@ -26,9 +24,7 @@ const Container = styled.div`
 `;
 
 const RecentlyAdded = ({ studios }) => {
-  const sortedStudios = [...studios]
-    .sort((a, b) => compareDesc(parseISO(a.dateAdded), parseISO(b.dateAdded)))
-    .slice(0, MAX_STUDIOS_COUNT);
+  const sortedStudios = [...studios].slice(0, MAX_STUDIOS_COUNT);
 
   return (
     <Container>
