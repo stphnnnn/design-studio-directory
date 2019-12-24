@@ -33,6 +33,7 @@ const LogoAnchor = React.forwardRef((props, ref) => {
 
 const Header = ({ children }) => {
   const theme = useTheme();
+  const breakpoint = useBreakpoint();
 
   const { scrollY } = useViewportScroll();
 
@@ -88,7 +89,7 @@ const Header = ({ children }) => {
         </div>
         <div
           style={{
-            height: 400,
+            height: breakpoint.gte("md") ? 400 : 300,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -103,7 +104,7 @@ const Header = ({ children }) => {
           `}
         >
           {children}
-          <VerticalSpace size="2rem" />
+          {breakpoint.gte("md") && <VerticalSpace size="2rem" />}
         </div>
       </Constraint>
     </header>

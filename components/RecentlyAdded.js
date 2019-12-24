@@ -3,6 +3,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { jsx, css } from "@emotion/core";
+import { useTheme } from "emotion-theming";
 
 import Heading from "./Heading";
 import Constraint from "./Constraint";
@@ -12,26 +13,27 @@ import useBreakpoint from "./useBreakpoint";
 
 const MAX_STUDIOS_COUNT = 18;
 
-const constraint = css`
-  display: flex;
-  flex-direction: column;
-  padding-top: 10rem;
-  padding-bottom: 6rem;
-  text-align: center;
-`;
-
 const Container = styled.div`
   background-color: ${props => props.theme.colors.lightYellow};
 `;
 
 const RecentlyAdded = ({ studios }) => {
   const breakpoint = useBreakpoint();
+  const theme = useTheme();
 
   const sortedStudios = [...studios].slice(0, MAX_STUDIOS_COUNT);
 
   return (
     <Container>
-      <Constraint css={constraint}>
+      <Constraint
+        css={css`
+          display: flex;
+          flex-direction: column;
+          padding-top: ${breakpoint.gte("md") ? "10rem" : "4rem"};
+          padding-bottom: ${breakpoint.gte("md") ? "6rem" : "3rem"};
+          text-align: center;
+        `}
+      >
         <Heading level={2} size={breakpoint.gte("md") ? 1.3 : 1}>
           Recently added studios
         </Heading>

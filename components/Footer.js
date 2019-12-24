@@ -47,7 +47,7 @@ const Footer = () => {
       >
         <div
           style={{
-            padding: "6rem 0",
+            padding: `${breakpoint.gte("md") ? "6rem" : "4rem"} 0`,
             display: "flex",
             alignItems: "center",
             justifyContent: "center"
