@@ -8,6 +8,7 @@ import Heading from "./Heading";
 import Constraint from "./Constraint";
 import StudiosGrid from "./StudiosGrid";
 import VerticalSpace from "./VerticalSpace";
+import useBreakpoint from "./useBreakpoint";
 
 const MAX_STUDIOS_COUNT = 18;
 
@@ -24,12 +25,14 @@ const Container = styled.div`
 `;
 
 const RecentlyAdded = ({ studios }) => {
+  const breakpoint = useBreakpoint();
+
   const sortedStudios = [...studios].slice(0, MAX_STUDIOS_COUNT);
 
   return (
     <Container>
       <Constraint css={constraint}>
-        <Heading level={2} size={1.3}>
+        <Heading level={2} size={breakpoint.gte("md") ? 1.3 : 1}>
           Recently added studios
         </Heading>
         <VerticalSpace size="2rem" />

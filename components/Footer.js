@@ -7,6 +7,7 @@ import { useTheme } from "emotion-theming";
 
 import Constraint from "./Constraint";
 import { TwitterLogo } from "./icons";
+import useBreakpoint from "./useBreakpoint";
 
 const PlainAnchor = styled.a`
   text-decoration: none;
@@ -31,6 +32,8 @@ const Anchor = styled.a`
 
 const Footer = () => {
   const theme = useTheme();
+  const breakpoint = useBreakpoint();
+
   return (
     <footer
       style={{
@@ -56,7 +59,7 @@ const Footer = () => {
             rel="noopener noreferrer"
             style={{
               fontWeight: 600,
-              fontSize: "1.5rem"
+              fontSize: breakpoint.gte("md") ? "1.5rem" : "1.2rem"
             }}
           >
             Suggest a studio

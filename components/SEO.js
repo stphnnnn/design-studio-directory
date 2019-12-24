@@ -5,8 +5,7 @@ import Head from "next/head";
 const BASE_URL = "https://designstudio.directory";
 
 const commonMeta = {
-  description:
-    "An extensive list of design studios from all around the world. Created to support students and designers in their search for internships and full-time employment.",
+  description: "An extensive list of design studios from around the world.",
   image: `${BASE_URL}/social-media-banner.jpg`,
   twitterHandle: "@DesignStudioDir"
 };

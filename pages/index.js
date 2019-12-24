@@ -4,6 +4,7 @@ import Router from "next/router";
 import absoluteUrl from "next-absolute-url";
 import fetch from "isomorphic-unfetch";
 import { jsx, css } from "@emotion/core";
+import { useTheme } from "emotion-theming";
 
 import Heading from "../components/Heading";
 import { Layout } from "../components/Layout";
@@ -12,6 +13,7 @@ import Select from "../components/Select";
 
 import SEO from "../components/SEO";
 import Header from "../components/Header";
+import useBreakpoint from "../components/useBreakpoint";
 
 const sizes = {
   LARGE: 100,
@@ -22,6 +24,10 @@ const IndexPage = ({ studios, locations }) => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [activeField, setActiveField] = React.useState(0);
+
+  const breakpoint = useBreakpoint();
+
+  const theme = useTheme();
 
   const countryOptions = Object.keys(locations).sort();
   const cityOptions = selectedCountry
@@ -66,37 +72,55 @@ const IndexPage = ({ studios, locations }) => {
         `}
       >
         <SEO title="Home" />
-        <Select
-          label="Pick a country"
-          onChange={selectedItem => setSelectedCountry(selectedItem)}
-          options={countryOptions}
-          isCompact={activeField !== 0}
-          disabled={isLoading}
-          onOpen={() => setActiveField(0)}
-          onClose={() => selectedCountry && setActiveField(1)}
-          css={props => css`
-            ${props.mq.md} {
-              top: ${activeField !== 0
-                ? `${(sizes.LARGE - sizes.SMALL) / 2}px`
-                : undefined};
-            }
-          `}
-        />
-        <Select
-          label="Pick a city"
-          options={cityOptions}
-          onChange={handleCityChange}
-          isCompact={activeField !== 1}
-          disabled={isLoading || !Boolean(selectedCountry)}
-          onOpen={() => setActiveField(1)}
-          css={props => css`
-            ${props.mq.md} {
-              top: ${activeField !== 1
-                ? `${(sizes.LARGE - sizes.SMALL) / 2}px`
-                : undefined};
-            }
-          `}
-        />
+        <div
+          style={{
+            background: breakpoint.gte("md") ? undefined : theme.colors.darkBlue
+          }}
+        >
+          <Select
+            label="Pick a country"
+            onChange={selectedItem => setSelectedCountry(selectedItem)}
+            options={countryOptions}
+            isCompact={activeField !== 0}
+            disabled={isLoading}
+            onOpen={() => setActiveField(0)}
+            onClose={() => selectedCountry && setActiveField(1)}
+            css={props => css`
+              max-width: 90%;
+              margin: 0 auto;
+              ${props.mq.md} {
+                top: ${activeField !== 0
+                  ? `${(sizes.LARGE - sizes.SMALL) / 2}px`
+                  : undefined};
+              }
+            `}
+          />
+        </div>
+        <div
+          style={{
+            background: breakpoint.gte("md")
+              ? undefined
+              : theme.colors.lightYellow
+          }}
+        >
+          <Select
+            label="Pick a city"
+            options={cityOptions}
+            onChange={handleCityChange}
+            isCompact={activeField !== 1}
+            disabled={isLoading || !Boolean(selectedCountry)}
+            onOpen={() => setActiveField(1)}
+            css={props => css`
+              max-width: 90%;
+              margin: 0 auto;
+              ${props.mq.md} {
+                top: ${activeField !== 1
+                  ? `${(sizes.LARGE - sizes.SMALL) / 2}px`
+                  : undefined};
+              }
+            `}
+          />
+        </div>
       </div>
       <RecentlyAdded studios={studios} />
     </Layout>

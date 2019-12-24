@@ -10,10 +10,13 @@ import { motion, useViewportScroll, useTransform } from "framer-motion";
 import Constraint from "./Constraint";
 import Heading from "./Heading";
 import VerticalSpace from "./VerticalSpace";
+import useBreakpoint from "./useBreakpoint";
 
 const LogoAnchor = React.forwardRef((props, ref) => {
+  const breakpoint = useBreakpoint();
+
   return (
-    <Heading level={1} size={1.3} weight={600}>
+    <Heading level={1} size={breakpoint.gte("md") ? 1.3 : 1} weight={600}>
       <a
         ref={ref}
         href="/"

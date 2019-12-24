@@ -4,39 +4,12 @@ import Router from "next/router";
 import Head from "next/head";
 import styled from "@emotion/styled";
 import { Global, css } from "@emotion/core";
-import { ThemeProvider } from "emotion-theming";
+import { useTheme } from "emotion-theming";
 
 import { useLogPageView } from "../../analytics";
 import Footer from "../Footer";
 
 import reset from "./reset";
-
-const breakpoints = {
-  sm: 576,
-  md: 768,
-  lg: 992,
-  xl: 1200
-};
-
-const theme = {
-  colors: {
-    darkBlue: `#111521`,
-    blue: `#1A2233`,
-    lightBlue: `#242F47`,
-    lightYellow: `#FCF781`,
-    yellow: `#FBF201`,
-    lightGrey: `#9197A4`,
-    light: "#FFFFFF"
-  },
-  mq: Object.entries(breakpoints).reduce(
-    (breakpoints, [bp, value]) => ({
-      ...breakpoints,
-      [bp]: `@media (min-width: ${value}px)`
-    }),
-    {}
-  ),
-  getFocusStyle: color => `box-shadow: 0 0 0 2px ${color}`
-};
 
 const LoadingOverlay = styled.div`
   position: fixed;
@@ -81,6 +54,8 @@ const LoadingSpinner = () => (
 const Layout = ({ header, children }) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const theme = useTheme();
+
   useLogPageView();
 
   React.useEffect(() => {
@@ -99,7 +74,7 @@ const Layout = ({ header, children }) => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    <>
       <Head>
         <link
           rel="apple-touch-icon"
@@ -152,7 +127,7 @@ const Layout = ({ header, children }) => {
       {isLoading && <LoadingSpinner />}
       <main>{children}</main>
       <Footer />
-    </ThemeProvider>
+    </>
   );
 };
 
