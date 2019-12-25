@@ -70,22 +70,23 @@ const Footer = () => {
             display: "flex",
             justifyContent: "space-around",
             alignItems: "center",
+            flexDirection: breakpoint.gte("md") ? "row" : "column",
             paddingBottom: `4rem`,
             textAlign: "center",
             fontSize: "0.8rem"
           }}
         >
-          <span>
+          <div>
             A project by{" "}
             <Anchor href="http://jamingalea.com/">Jamin Galea</Anchor>
-          </span>
-          <span>
+          </div>
+          <div>
             Built by{" "}
             <Anchor href="https://steveburtenshaw.com/">
               Steve Burtenshaw
             </Anchor>
-          </span>
-          <span>
+          </div>
+          <div>
             <PlainAnchor
               href="https://twitter.com/DesignStudioDir"
               css={css`
@@ -101,7 +102,7 @@ const Footer = () => {
               />{" "}
               @DesignStudioDir
             </PlainAnchor>
-          </span>
+          </div>
         </div>
       </Constraint>
     </footer>

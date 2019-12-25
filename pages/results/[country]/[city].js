@@ -14,6 +14,7 @@ import SEO from "../../../components/SEO";
 import { Layout } from "../../../components/Layout";
 import StudiosGrid from "../../../components/StudiosGrid";
 import VerticalSpace from "../../../components/VerticalSpace";
+import useBreakpoint from "../../../components/useBreakpoint";
 
 const constraint = css`
   padding-top: 5rem;
@@ -31,6 +32,7 @@ const defaultButtonStyles = `
   align-items: center;
   justify-content: center;
   flex-grow: 0;
+  flex-shrink: 0;
   padding: 0 2rem;
   border-radius: 5px;
   text-transform: uppercase;
@@ -88,16 +90,28 @@ const ButtonAnchor = React.forwardRef(({ type = "primary", ...props }, ref) => {
 const ResultsPage = ({ studios, city, country }) => {
   const hasResults = city && country && studios.length > 0;
 
+  const breakpoint = useBreakpoint();
+
   return (
     <Layout
       header={
         <Header>
           {hasResults ? (
             <div>
-              <Heading level={3} size={1.9} lineHeight={1.5} weight={300}>
+              <Heading
+                level={3}
+                size={breakpoint.gte("md") ? 1.9 : 1.2}
+                lineHeight={1.5}
+                weight={300}
+              >
                 Here’s a list of studios in
               </Heading>
-              <Heading level={2} size={1.9} lineHeight={1.5} weight={600}>
+              <Heading
+                level={2}
+                size={breakpoint.gte("md") ? 1.9 : 1.2}
+                lineHeight={1.5}
+                weight={600}
+              >
                 {city}, {country}
               </Heading>
             </div>
