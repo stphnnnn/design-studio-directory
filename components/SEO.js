@@ -15,7 +15,7 @@ function SEO({ title, url = BASE_URL }) {
 
   return (
     <Head>
-      <title>{metaTitle} | Design Studio Directory</title>
+      <title>{metaTitle}</title>
       <meta name="description" content={commonMeta.description} />
 
       {/* Twitter Card */}
