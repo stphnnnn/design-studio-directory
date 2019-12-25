@@ -89,6 +89,7 @@ const IndexPage = ({ studios, locations }) => {
               max-width: 90%;
               margin: 0 auto;
               ${props.mq.md} {
+                max-width: 100%;
                 top: ${activeField !== 0
                   ? `${(sizes.LARGE - sizes.SMALL) / 2}px`
                   : undefined};
@@ -114,6 +115,7 @@ const IndexPage = ({ studios, locations }) => {
               max-width: 90%;
               margin: 0 auto;
               ${props.mq.md} {
+                max-width: 100%;
                 top: ${activeField !== 1
                   ? `${(sizes.LARGE - sizes.SMALL) / 2}px`
                   : undefined};
