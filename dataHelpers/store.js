@@ -32,7 +32,10 @@ export const getData = () => async (dispatch, getState) => {
   }
 
   try {
-    const url = `https://designstudio.directory/api`;
+    const url =
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:3000/api"
+        : `https://designstudio.directory/api`;
 
     const response = await fetch(url);
     const { studios, locations } = await response.json();
