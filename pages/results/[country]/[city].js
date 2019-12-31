@@ -1,12 +1,12 @@
 /** @jsx jsx */
 import React from "react";
-import absoluteUrl from "next-absolute-url";
+import { connect } from "react-redux";
 import Link from "next/link";
-import fetch from "isomorphic-unfetch";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { useTheme } from "emotion-theming";
 
+import { getData } from "../../../dataHelpers/store";
 import Constraint from "../../../components/Constraint";
 import Header from "../../../components/Header";
 import Heading from "../../../components/Heading";
@@ -152,18 +152,18 @@ const ResultsPage = ({ studios, city, country }) => {
   );
 };
 
-ResultsPage.getInitialProps = async ({ req, query }) => {
-  const { origin } = absoluteUrl(req);
+ResultsPage.getInitialProps = async ({ reduxStore, req, query }) => {
+  const { dispatch } = reduxStore;
 
-  const res = await fetch(`${origin}/api`);
-  const data = await res.json();
+  await dispatch(getData());
 
+  const { studios } = reduxStore.getState();
   const { city, country } = query;
 
   const isSelectedLocation = location =>
     location.country === country && location.city === city;
 
-  const studios = data.studios
+  const filteredStudios = studios
     .filter(studio =>
       // Only show studios in the selected location
       studio.locations.some(location => isSelectedLocation(location))
@@ -180,7 +180,7 @@ ResultsPage.getInitialProps = async ({ req, query }) => {
       };
     });
 
-  return { studios, city, country };
+  return { studios: filteredStudios, city, country };
 };
 
-export default ResultsPage;
+export default connect()(ResultsPage);

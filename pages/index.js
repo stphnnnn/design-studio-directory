@@ -1,8 +1,7 @@
 /** @jsx jsx */
 import React from "react";
 import Router from "next/router";
-import absoluteUrl from "next-absolute-url";
-import fetch from "isomorphic-unfetch";
+import { connect } from "react-redux";
 import { jsx, css } from "@emotion/core";
 import { useTheme } from "emotion-theming";
 
@@ -14,6 +13,8 @@ import Select from "../components/Select";
 import SEO from "../components/SEO";
 import Header from "../components/Header";
 import useBreakpoint from "../components/useBreakpoint";
+
+import { getData } from "../dataHelpers/store";
 
 const sizes = {
   LARGE: 100,
@@ -57,7 +58,6 @@ const IndexPage = ({ studios, locations }) => {
           </Heading>
         </Header>
       }
-      showLoadingSpinner={isLoading}
     >
       <div
         css={props => css`
@@ -129,13 +129,14 @@ const IndexPage = ({ studios, locations }) => {
   );
 };
 
-IndexPage.getInitialProps = async ({ req }) => {
-  const { origin } = absoluteUrl(req);
-
-  const res = await fetch(`${origin}/api`);
-  const { studios, locations } = await res.json();
-
-  return { studios, locations };
+IndexPage.getInitialProps = async ({ reduxStore }) => {
+  const { dispatch } = reduxStore;
+  await dispatch(getData());
+  return {};
 };
 
-export default IndexPage;
+function mapStateToProps({ studios, locations }) {
+  return { studios, locations };
+}
+
+export default connect(mapStateToProps)(IndexPage);

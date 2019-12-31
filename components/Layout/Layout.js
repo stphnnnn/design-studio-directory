@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Router from "next/router";
 import Head from "next/head";
 import styled from "@emotion/styled";
 import { Global, css } from "@emotion/core";
@@ -52,26 +51,9 @@ const LoadingSpinner = () => (
 );
 
 const Layout = ({ header, children }) => {
-  const [isLoading, setIsLoading] = React.useState(false);
-
   const theme = useTheme();
 
   useLogPageView();
-
-  React.useEffect(() => {
-    const showLoader = () => setIsLoading(true);
-    const hideLoader = () => setIsLoading(false);
-
-    Router.events.on("routeChangeStart", showLoader);
-    Router.events.on("routeChangeComplete", hideLoader);
-    Router.events.on("routeChangeError", hideLoader);
-
-    return () => {
-      Router.events.off("routeChangeStart", showLoader);
-      Router.events.off("routeChangeComplete", hideLoader);
-      Router.events.off("routeChangeError", hideLoader);
-    };
-  }, []);
 
   return (
     <>
@@ -110,7 +92,6 @@ const Layout = ({ header, children }) => {
 
           body {
             font-family: "Work Sans", sans-serif;
-            ${isLoading && "overflow: hidden;"}
           }
 
           a {
@@ -124,7 +105,6 @@ const Layout = ({ header, children }) => {
         `}
       />
       {header}
-      {isLoading && <LoadingSpinner />}
       <main>{children}</main>
       <Footer />
     </>
