@@ -123,7 +123,7 @@ const Studio = ({ name, locations, url, twitterHandle, image }) => {
           >
             <span>
               {truncateString(
-                locations.map(location => location.city).join(", "),
+                locations.map(location => location.city).join(" · "),
                 30
               )}
             </span>
