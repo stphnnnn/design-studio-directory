@@ -17,10 +17,11 @@ import StudiosGrid from "../../../components/StudiosGrid";
 import VerticalSpace from "../../../components/VerticalSpace";
 import useBreakpoint from "../../../components/useBreakpoint";
 import Select from "../../../components/Select";
+import ProgressBar from "../../../components/ProgressBar";
+
+const RESULTS_PER_PAGE = 30;
 
 const constraint = css`
-  padding-top: 5rem;
-  padding-bottom: 5rem;
   text-align: center;
 `;
 
@@ -42,6 +43,7 @@ const defaultButtonStyles = `
   font-size: 0.66rem;
   cursor: pointer;
   text-decoration: none;
+  font-weight: 600;
 `;
 
 const ButtonAnchor = React.forwardRef(({ type = "primary", ...props }, ref) => {
@@ -90,12 +92,47 @@ const ButtonAnchor = React.forwardRef(({ type = "primary", ...props }, ref) => {
 });
 
 const ResultsPage = ({ studios, city, country, locations }) => {
-  const hasResults = city && country && studios.length > 0;
+  const router = useRouter();
 
   const breakpoint = useBreakpoint();
-  const theme = useTheme();
 
-  const router = useRouter();
+  // Pagination
+  const [currentPage, setCurrentPage] = React.useState(0);
+  const currentStudios = studios.slice(
+    0,
+    currentPage * RESULTS_PER_PAGE + RESULTS_PER_PAGE
+  );
+
+  const hasResults = city && country && studios.length > 0;
+
+  if (!hasResults) {
+    return (
+      <Layout
+        header={
+          <Header>
+            <Heading level={2} size={1.9} lineHeight={1.5} weight={300}>
+              No studios found
+            </Heading>
+            <VerticalSpace size="3rem" />
+          </Header>
+        }
+      >
+        <SEO
+          title="No studios found"
+          url={`https://designstudio.directory/${country}/${city}`}
+        />
+        <Container>
+          <Constraint css={constraint}>
+            <VerticalSpace size="5rem" />
+            <Link href="/">
+              <ButtonAnchor type="secondary">Back to Homepage</ButtonAnchor>
+            </Link>
+            <VerticalSpace size="5rem" />
+          </Constraint>
+        </Container>
+      </Layout>
+    );
+  }
 
   const cityOptions = country ? [...locations[country]].sort() : [];
 
@@ -110,30 +147,24 @@ const ResultsPage = ({ studios, city, country, locations }) => {
     <Layout
       header={
         <Header>
-          {hasResults ? (
-            <div>
-              <Heading
-                level={3}
-                size={breakpoint.gte("md") ? 1.9 : 1.2}
-                lineHeight={1.5}
-                weight={300}
-              >
-                Here’s a list of studios in
-              </Heading>
-              <Heading
-                level={2}
-                size={breakpoint.gte("md") ? 1.9 : 1.2}
-                lineHeight={1.5}
-                weight={600}
-              >
-                {city}, {country}
-              </Heading>
-            </div>
-          ) : (
-            <Heading level={2} size={1.9} lineHeight={1.5} weight={300}>
-              No studios found
+          <div>
+            <Heading
+              level={3}
+              size={breakpoint.gte("md") ? 1.9 : 1.2}
+              lineHeight={1.5}
+              weight={300}
+            >
+              Here’s a list of studios in
             </Heading>
-          )}
+            <Heading
+              level={2}
+              size={breakpoint.gte("md") ? 1.9 : 1.2}
+              lineHeight={1.5}
+              weight={600}
+            >
+              {city}, {country}
+            </Heading>
+          </div>
           <VerticalSpace size="3rem" />
         </Header>
       }
@@ -184,15 +215,61 @@ const ResultsPage = ({ studios, city, country, locations }) => {
         />
       </div>
       <Container>
-        {hasResults && (
-          <Constraint css={constraint}>
-            <StudiosGrid studios={studios} />
-            <VerticalSpace size="4rem" />
-            <Link href="/">
-              <ButtonAnchor type="secondary">Search Again</ButtonAnchor>
-            </Link>
-          </Constraint>
-        )}
+        <Constraint css={constraint}>
+          <VerticalSpace size="5rem" />
+
+          <StudiosGrid studios={currentStudios} />
+
+          <VerticalSpace size="2.5rem" />
+
+          {studios.length > RESULTS_PER_PAGE &&
+            currentStudios.length < studios.length && (
+              <div
+                css={css`
+                  display: flex;
+                  flex-direction: column;
+                  width: 250px;
+                  margin: 0 auto;
+                `}
+              >
+                <div
+                  css={css`
+                    font-size: 0.66rem;
+                  `}
+                >
+                  Showing {currentStudios.length} of {studios.length}
+                </div>
+                <VerticalSpace size="1rem" />
+                <ProgressBar
+                  value={currentStudios.length}
+                  max={studios.length}
+                />
+                <VerticalSpace size="1rem" />
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  css={css`
+                    text-transform: uppercase;
+                    letter-spacing: 0.05em;
+                    font-size: 0.66rem;
+                    cursor: pointer;
+                    background: none;
+                    border: none;
+                    font-weight: 600;
+                  `}
+                >
+                  Load more
+                </button>
+              </div>
+            )}
+
+          <VerticalSpace size="2.5rem" />
+
+          <Link href="/">
+            <ButtonAnchor type="secondary">Back to Homepage</ButtonAnchor>
+          </Link>
+
+          <VerticalSpace size="5rem" />
+        </Constraint>
       </Container>
     </Layout>
   );
