@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import React from "react";
 import { connect } from "react-redux";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
@@ -15,6 +16,7 @@ import { Layout } from "../../../components/Layout";
 import StudiosGrid from "../../../components/StudiosGrid";
 import VerticalSpace from "../../../components/VerticalSpace";
 import useBreakpoint from "../../../components/useBreakpoint";
+import Select from "../../../components/Select";
 
 const constraint = css`
   padding-top: 5rem;
@@ -23,7 +25,7 @@ const constraint = css`
 `;
 
 const Container = styled.div`
-  background-color: ${props => props.theme.colors.lightYellow};
+  background-color: ${(props) => props.theme.colors.lightYellow};
 `;
 
 const defaultButtonStyles = `
@@ -87,10 +89,22 @@ const ButtonAnchor = React.forwardRef(({ type = "primary", ...props }, ref) => {
   );
 });
 
-const ResultsPage = ({ studios, city, country }) => {
+const ResultsPage = ({ studios, city, country, locations }) => {
   const hasResults = city && country && studios.length > 0;
 
   const breakpoint = useBreakpoint();
+  const theme = useTheme();
+
+  const router = useRouter();
+
+  const cityOptions = country ? [...locations[country]].sort() : [];
+
+  const handleCityChange = (selectedItem) => {
+    router.push(
+      `/results/[country]/[city]`,
+      `/results/${country}/${selectedItem}`
+    );
+  };
 
   return (
     <Layout
@@ -120,11 +134,7 @@ const ResultsPage = ({ studios, city, country }) => {
               No studios found
             </Heading>
           )}
-          <VerticalSpace size="2rem" />
-          <Link href="/">
-            <ButtonAnchor>Search Again</ButtonAnchor>
-          </Link>
-          <VerticalSpace size="2rem" />
+          <VerticalSpace size="3rem" />
         </Header>
       }
     >
@@ -132,15 +142,51 @@ const ResultsPage = ({ studios, city, country }) => {
         title={`Studios in ${city}, ${country}`}
         url={`https://designstudio.directory/${country}/${city}`}
       />
+      <div
+        css={(props) => css`
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          align-items: center;
+          position: absolute;
+          transform: translateY(-50%);
+          z-index: 1;
+        `}
+      >
+        <div
+          css={(props) => css`
+            position: absolute;
+            transform: translateY(-100%);
+            padding-bottom: 1rem;
+            z-index: 1;
+            color: white;
+            font-size: 0.66rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            font-weight: 500;
+          `}
+        >
+          Change city
+        </div>
+        <Select
+          label="Change city"
+          options={cityOptions}
+          onChange={handleCityChange}
+          initialSelectedItem={city}
+          isCompact={false}
+          css={(props) => css`
+            max-width: 90%;
+            margin: 0 auto;
+            ${props.mq.md} {
+              max-width: 100%;
+            }
+          `}
+        />
+      </div>
       <Container>
         {hasResults && (
           <Constraint css={constraint}>
-            <StudiosGrid
-              studios={studios}
-              css={css`
-                margin-top: -7rem;
-              `}
-            />
+            <StudiosGrid studios={studios} />
             <VerticalSpace size="4rem" />
             <Link href="/">
               <ButtonAnchor type="secondary">Search Again</ButtonAnchor>
@@ -160,15 +206,15 @@ ResultsPage.getInitialProps = async ({ reduxStore, req, query }) => {
   const { studios } = reduxStore.getState();
   const { city, country } = query;
 
-  const isSelectedLocation = location =>
+  const isSelectedLocation = (location) =>
     location.country === country && location.city === city;
 
   const filteredStudios = studios
-    .filter(studio =>
+    .filter((studio) =>
       // Only show studios in the selected location
-      studio.locations.some(location => isSelectedLocation(location))
+      studio.locations.some((location) => isSelectedLocation(location))
     )
-    .map(studio => {
+    .map((studio) => {
       // Move selected location to the start of the list
       const locations = studio.locations.sort((a, b) =>
         isSelectedLocation(a) ? -1 : isSelectedLocation(b) ? 1 : 0
@@ -176,11 +222,15 @@ ResultsPage.getInitialProps = async ({ reduxStore, req, query }) => {
 
       return {
         ...studio,
-        locations
+        locations,
       };
     });
 
   return { studios: filteredStudios, city, country };
 };
 
-export default connect()(ResultsPage);
+function mapStateToProps({ locations }) {
+  return { locations };
+}
+
+export default connect(mapStateToProps)(ResultsPage);

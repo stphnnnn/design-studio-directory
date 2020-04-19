@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from "react";
-import Router from "next/router";
+import { useRouter } from "next/router";
 import { connect } from "react-redux";
 import { jsx, css } from "@emotion/core";
 import { useTheme } from "emotion-theming";
@@ -18,7 +18,7 @@ import { getData } from "../dataHelpers/store";
 
 const sizes = {
   LARGE: 100,
-  SMALL: 75
+  SMALL: 75,
 };
 
 const IndexPage = ({ studios, locations }) => {
@@ -26,8 +26,9 @@ const IndexPage = ({ studios, locations }) => {
   const [selectedCountry, setSelectedCountry] = React.useState(null);
   const [activeField, setActiveField] = React.useState(0);
 
-  const breakpoint = useBreakpoint();
+  const router = useRouter();
 
+  const breakpoint = useBreakpoint();
   const theme = useTheme();
 
   const countryOptions = Object.keys(locations).sort();
@@ -35,9 +36,9 @@ const IndexPage = ({ studios, locations }) => {
     ? [...locations[selectedCountry]].sort()
     : [];
 
-  const handleCityChange = selectedItem => {
+  const handleCityChange = (selectedItem) => {
     setIsLoading(true);
-    Router.push(
+    router.push(
       `/results/[country]/[city]`,
       `/results/${selectedCountry}/${selectedItem}`
     );
@@ -60,7 +61,7 @@ const IndexPage = ({ studios, locations }) => {
       }
     >
       <div
-        css={props => css`
+        css={(props) => css`
           ${props.mq.md} {
             display: flex;
             width: 100%;
@@ -74,18 +75,20 @@ const IndexPage = ({ studios, locations }) => {
         <SEO title="Home" />
         <div
           style={{
-            background: breakpoint.gte("md") ? undefined : theme.colors.darkBlue
+            background: breakpoint.gte("md")
+              ? undefined
+              : theme.colors.darkBlue,
           }}
         >
           <Select
             label="Pick a country"
-            onChange={selectedItem => setSelectedCountry(selectedItem)}
+            onChange={(selectedItem) => setSelectedCountry(selectedItem)}
             options={countryOptions}
             isCompact={activeField !== 0}
             disabled={isLoading}
             onOpen={() => setActiveField(0)}
             onClose={() => selectedCountry && setActiveField(1)}
-            css={props => css`
+            css={(props) => css`
               max-width: 90%;
               margin: 0 auto;
               ${props.mq.md} {
@@ -101,7 +104,7 @@ const IndexPage = ({ studios, locations }) => {
           style={{
             background: breakpoint.gte("md")
               ? undefined
-              : theme.colors.lightYellow
+              : theme.colors.lightYellow,
           }}
         >
           <Select
@@ -111,7 +114,7 @@ const IndexPage = ({ studios, locations }) => {
             isCompact={activeField !== 1}
             disabled={isLoading || !Boolean(selectedCountry)}
             onOpen={() => setActiveField(1)}
-            css={props => css`
+            css={(props) => css`
               max-width: 90%;
               margin: 0 auto;
               ${props.mq.md} {

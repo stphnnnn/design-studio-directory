@@ -10,28 +10,28 @@ import { transparentize } from "polished";
 
 const sizes = {
   LARGE: 100,
-  SMALL: 75
+  SMALL: 75,
 };
 
 const Input = styled.input`
   width: 100%;
-  height: ${props => (props.isCompact ? sizes.SMALL : sizes.LARGE)}px;
+  height: ${(props) => (props.isCompact ? sizes.SMALL : sizes.LARGE)}px;
   padding: 2rem;
   border-radius: 0;
   border: none;
-  background-color: ${props =>
+  background-color: ${(props) =>
     props.isCompact ? props.theme.colors.blue : props.theme.colors.lightBlue};
   color: white;
   font-weight: 600;
   opacity: 1;
 
   &::placeholder {
-    color: ${props => transparentize(props.isCompact ? 0.75 : 0, "#ffffff")};
+    color: ${(props) => transparentize(props.isCompact ? 0.75 : 0, "#ffffff")};
     font-weight: 600;
   }
 `;
 
-const ArrowIcon = props => (
+const ArrowIcon = (props) => (
   <svg height="20" width="20" viewBox="0 0 20 20" role="img" {...props}>
     <path d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"></path>
   </svg>
@@ -41,15 +41,16 @@ const Select = ({
   disabled,
   label,
   options = [],
+  initialSelectedItem,
   onChange = Function.prototype,
   onOpen = Function.prototype,
   onClose = Function.prototype,
   isCompact,
-  className
+  className,
 }) => {
   const theme = useTheme();
 
-  const handleStateChange = changes => {
+  const handleStateChange = (changes) => {
     if (changes.isOpen === true) {
       return onOpen();
     }
@@ -60,7 +61,11 @@ const Select = ({
   };
 
   return (
-    <Downshift onChange={onChange} onStateChange={handleStateChange}>
+    <Downshift
+      onChange={onChange}
+      onStateChange={handleStateChange}
+      initialSelectedItem={initialSelectedItem}
+    >
       {({
         getInputProps,
         getItemProps,
@@ -69,11 +74,11 @@ const Select = ({
         getToggleButtonProps,
         isOpen,
         highlightedIndex,
-        selectedItem
+        selectedItem,
       }) => (
         <div
           style={{
-            position: "relative"
+            position: "relative",
           }}
           className={className}
         >
@@ -82,7 +87,7 @@ const Select = ({
           </VisuallyHidden>
           <button
             {...getToggleButtonProps({
-              "aria-label": isOpen ? "close menu" : "open menu"
+              "aria-label": isOpen ? "close menu" : "open menu",
             })}
             css={css`
               position: absolute;
@@ -121,12 +126,12 @@ const Select = ({
               marginRight: "-2%",
               opacity: isCompact ? 0.25 : undefined,
               transform: `translateY(-50%) scaleY(${isOpen ? -1 : 1})`,
-              pointerEvents: "none"
+              pointerEvents: "none",
             }}
           />
           <Input
             {...getInputProps({
-              disabled: true
+              disabled: true,
             })}
             placeholder={label}
             isCompact={isCompact}
@@ -161,8 +166,8 @@ const Select = ({
                       backgroundColor:
                         highlightedIndex === index ? theme.colors.blue : null,
                       fontWeight: selectedItem === item ? "bold" : "normal",
-                      cursor: "pointer"
-                    }
+                      cursor: "pointer",
+                    },
                   })}
                   css={css`
                     padding: 0.3rem 1rem;
