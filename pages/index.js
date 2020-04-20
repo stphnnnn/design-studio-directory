@@ -81,7 +81,9 @@ const IndexPage = ({ studios, locations }) => {
           }}
         >
           <Select
+            id="country-combo"
             label="Pick a country"
+            noOptionsMessage="No countries found"
             onChange={(selectedItem) => setSelectedCountry(selectedItem)}
             options={countryOptions}
             isCompact={activeField !== 0}
@@ -108,7 +110,9 @@ const IndexPage = ({ studios, locations }) => {
           }}
         >
           <Select
+            id="city-combo"
             label="Pick a city"
+            noOptionsMessage="No cities found"
             options={cityOptions}
             onChange={handleCityChange}
             isCompact={activeField !== 1}

@@ -200,7 +200,9 @@ const ResultsPage = ({ studios, city, country, locations }) => {
           Change city
         </div>
         <Select
+          id="city-combo"
           label="Change city"
+          noOptionsMessage="No cities found"
           options={cityOptions}
           onChange={handleCityChange}
           initialSelectedItem={city}
