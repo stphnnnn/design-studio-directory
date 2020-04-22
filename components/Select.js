@@ -1,12 +1,11 @@
 /** @jsx jsx */
-
-import React from "react";
 import styled from "@emotion/styled";
 import { css, jsx } from "@emotion/core";
 import { useTheme } from "emotion-theming";
 import Downshift from "downshift";
-import VisuallyHidden from "./VisuallyHidden";
 import { transparentize } from "polished";
+
+import VisuallyHidden from "./VisuallyHidden";
 
 const sizes = {
   LARGE: 100,
@@ -27,7 +26,7 @@ const Input = styled.input`
 
   &::placeholder {
     color: ${(props) => transparentize(props.isCompact ? 0.75 : 0, "#ffffff")};
-    font-weight: 600;
+    font-weight: ${(props) => (props.isOpen ? 400 : 600)};
   }
 `;
 
@@ -40,8 +39,10 @@ const ArrowIcon = (props) => (
 const Select = ({
   disabled,
   label,
+  id,
   options = [],
   initialSelectedItem,
+  noOptionsMessage = "No options found",
   onChange = Function.prototype,
   onOpen = Function.prototype,
   onClose = Function.prototype,
@@ -62,6 +63,7 @@ const Select = ({
 
   return (
     <Downshift
+      id={id}
       onChange={onChange}
       onStateChange={handleStateChange}
       initialSelectedItem={initialSelectedItem}
@@ -71,114 +73,114 @@ const Select = ({
         getItemProps,
         getLabelProps,
         getMenuProps,
-        getToggleButtonProps,
+        openMenu,
+        inputValue,
         isOpen,
         highlightedIndex,
         selectedItem,
-      }) => (
-        <div
-          style={{
-            position: "relative",
-          }}
-          className={className}
-        >
-          <VisuallyHidden>
-            <label {...getLabelProps()}>{label}</label>
-          </VisuallyHidden>
-          <button
-            {...getToggleButtonProps({
-              "aria-label": isOpen ? "close menu" : "open menu",
-            })}
-            css={css`
-              position: absolute;
-              top: 0;
-              right: 0;
-              bottom: 0;
-              left: 0;
-              width: 100%;
-              background: none;
-              cursor: ${!disabled ? "pointer" : "auto"};
-              border: none;
+        setState,
+      }) => {
+        const filteredOptions = options.filter(
+          (item) =>
+            !inputValue || item.toLowerCase().includes(inputValue.toLowerCase())
+        );
 
-              &:focus {
-                box-shadow: none;
-                &::after {
-                  content: "";
-                  ${theme.getFocusStyle(theme.colors.yellow)};
-                  width: 100%;
-                  height: 100%;
-                  top: 0;
-                  left: 0;
-                  position: absolute;
-                  z-index: 1;
-                }
-              }
-            `}
-            disabled={disabled}
-          />
-          <ArrowIcon
+        const handleActive = () => {
+          openMenu();
+          setState({
+            inputValue: null,
+          });
+        };
+
+        return (
+          <div
             style={{
-              position: "absolute",
-              top: "50%",
-              transform: "translateY(-50%)",
-              right: "2rem",
-              fill: "white",
-              marginRight: "-2%",
-              opacity: isCompact ? 0.25 : undefined,
-              transform: `translateY(-50%) scaleY(${isOpen ? -1 : 1})`,
-              pointerEvents: "none",
+              position: "relative",
             }}
-          />
-          <Input
-            {...getInputProps({
-              disabled: true,
-            })}
-            placeholder={label}
-            isCompact={isCompact}
-          />
-          <ul
-            {...getMenuProps()}
-            css={css`
-              position: absolute;
-              z-index: 1;
-              top: 100%;
-              left: 0;
-              margin: 0;
-              background-color: ${theme.colors.lightBlue};
-              width: 100%;
-              color: ${theme.colors.light};
-              max-height: 375px;
-              overflow-y: scroll;
-              list-style: none;
-              margin: 0;
-              padding: 0;
-              height: ${isOpen ? "auto" : 0};
-            `}
+            className={className}
           >
-            {isOpen &&
-              options.map((item, index) => (
-                <li
-                  {...getItemProps({
-                    key: item,
-                    index,
-                    item,
-                    style: {
-                      backgroundColor:
-                        highlightedIndex === index ? theme.colors.blue : null,
-                      fontWeight: selectedItem === item ? "bold" : "normal",
-                      cursor: "pointer",
-                    },
-                  })}
-                  css={css`
-                    padding: 0.3rem 1rem;
-                  `}
-                >
-                  {item}
-                </li>
-              ))}
-          </ul>
-        </div>
-      )}
+            <VisuallyHidden>
+              <label {...getLabelProps()}>{label}</label>
+            </VisuallyHidden>
+            <ArrowIcon
+              style={{
+                position: "absolute",
+                top: "50%",
+                transform: "translateY(-50%)",
+                right: "2rem",
+                fill: "white",
+                marginRight: "-2%",
+                opacity: isCompact ? 0.25 : undefined,
+                transform: `translateY(-50%) scaleY(${isOpen ? -1 : 1})`,
+                pointerEvents: "none",
+              }}
+            />
+            <Input
+              {...getInputProps({
+                onFocus: handleActive,
+                onClick: handleActive,
+                disabled,
+              })}
+              isOpen={isOpen}
+              placeholder={isOpen ? "Scroll or start typing..." : label}
+              isCompact={isCompact}
+            />
+            <ul
+              {...getMenuProps()}
+              css={css`
+                position: absolute;
+                z-index: 1;
+                top: 100%;
+                left: 0;
+                margin: 0;
+                background-color: ${theme.colors.lightBlue};
+                width: 100%;
+                color: ${theme.colors.light};
+                max-height: 375px;
+                overflow-y: scroll;
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                height: ${isOpen ? "auto" : 0};
+              `}
+            >
+              {isOpen &&
+                (filteredOptions.length ? (
+                  filteredOptions.map((item, index) => (
+                    <li
+                      {...getItemProps({
+                        key: item,
+                        index,
+                        item,
+                        style: {
+                          backgroundColor:
+                            highlightedIndex === index
+                              ? theme.colors.blue
+                              : null,
+                          fontWeight: selectedItem === item ? "bold" : "normal",
+                          cursor: "pointer",
+                        },
+                      })}
+                      css={css`
+                        padding: 0.3rem 2rem;
+                      `}
+                    >
+                      {item}
+                    </li>
+                  ))
+                ) : (
+                  <span
+                    css={css`
+                      padding: 0.3rem 2rem;
+                    `}
+                  >
+                    {noOptionsMessage}
+                  </span>
+                ))}
+            </ul>
+          </div>
+        );
+      }}
     </Downshift>
   );
 };
