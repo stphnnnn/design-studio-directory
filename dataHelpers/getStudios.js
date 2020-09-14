@@ -25,7 +25,7 @@ const getStudios = (data) => {
         };
       });
 
-      const dateAdded = createDate(studio.dateAdded);
+      const dateAdded = createDate(studio["Date added"]);
 
       return {
         id: shortid.generate(),
